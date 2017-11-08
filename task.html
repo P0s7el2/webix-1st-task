@@ -1,0 +1,89 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title> Layout </title>
+  <script type="text/javascript" src="http://cdn.webix.com/edge/webix_debug.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://cdn.webix.com/edge/webix.css">
+  <script type="text/javascript" src="data.js"></script>
+  <style type="text/css">
+	.listBackground{
+		background-color: #F2F2F2;
+	}
+	.connection{
+		color: green;
+		font-size: 16px;
+		text-align:center;
+	}
+	
+	.footer{
+	text-align:center;
+	color:gray;
+	}
+  </style>
+</head>
+<body>
+
+<script type="text/javascript" charset="utf-8">
+webix.ui({
+	rows: [
+		{view:"toolbar", 
+			  cols:[
+				{ view:"label", label:"MyApp" },
+				{ view:"button", type:"icon", icon:"user", label:"Profile", autowidth:true },
+			  ]},
+		{cols: [
+			{rows: [
+				{
+				  view:"list",
+				  css: "listBackground",
+				  id:"list",
+				  scroll:false,
+				  autoheight:true,
+				  width:200,
+				  data:[ "Dashboard", "Users", "Products", "Locations" ]  },
+				  { },
+				  { view:"label", css:"connection", label:"<b>✔</b> Connected"} 
+				 
+				
+			], 
+			css:"listBackground"
+			},
+			{view:"resizer"},  
+			{rows: [
+				{view:"datatable", autoConfig:true,  data:small_film_set},
+				
+			]},
+			{rows: [
+				{
+				view:"form", 
+				height: 500,
+				gravity: 0.4,
+				elements: [
+					{ rows:[ 
+						{ template:"Edit films", type:"section"},
+						{ view:"text", label:"Title", value:"" },
+						{ view:"text", label:"Year", value:"" },
+						{ view:"text", label:"Rating", value:"" },
+						{ view:"text", label:"Votes", value:"" }
+					]},
+						{ margin:5, cols:[
+						{ view:"button", value:"Add new" , type:"form"},
+						{ view:"button", value:"Clear"}
+					]}
+				] },
+			]},
+			
+		 ]
+		 
+		},
+		
+			{
+			view:"template", css:"footer", template:"The software is provided by <a href='https://webix.com/'>https://webix.com/</a>. All rights reserved ©."
+		}
+			
+	]
+});
+  </script>
+  
+  </body>
+</html>

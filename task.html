@@ -55,13 +55,8 @@ webix.ui({
 				autoConfig: true,  
 				data: small_film_set,
 				on:{
-					"onItemClick":function(id){ var item = $$("mydata").getItem(); $$("myform").setValues(item);}
+					"onItemClick":function(id){ var item = $$("mydata").getSelectedItem(); $$("myform").setValues(item);}
 				}
-				/*grid.attachEvent("onItemClick", function(id, e, node){
-						    var item = this.getItem(id);
-						    function set_form(){
-												    $$("myform").setValues();
-						});	*/
 				},
 				
 			

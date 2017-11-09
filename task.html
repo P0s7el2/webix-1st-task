@@ -49,36 +49,80 @@ webix.ui({
 			css:"listBackground"
 			},
 			{view:"resizer"},  
-			{rows: [
-				{view:"datatable", autoConfig:true,  data:small_film_set},
-				
-			]},
-			{rows: [
-				{
-				view:"form", 
-				height: 500,
-				gravity: 0.4,
-				elements: [
-					{ rows:[ 
-						{ template:"Edit films", type:"section"},
-						{ view:"text", label:"Title", value:"" },
-						{ view:"text", label:"Year", value:"" },
-						{ view:"text", label:"Rating", value:"" },
-						{ view:"text", label:"Votes", value:"" }
-					]},
-						{ margin:5, cols:[
-						{ view:"button", value:"Add new" , type:"form"},
-						{ view:"button", value:"Clear"}
-					]}
-				] },
-			]},
 			
-		 ]
-		 
+				{view:"datatable", 
+				id:"mydata",
+				autoConfig: true,  
+				data: small_film_set,
+				on:{
+					"onItemClick":function(id){ var item = $$("mydata").getItem(); $$("myform").setValues(item);}
+				}
+				/*grid.attachEvent("onItemClick", function(id, e, node){
+						    var item = this.getItem(id);
+						    function set_form(){
+												    $$("myform").setValues();
+						});	*/
+				},
+				
+			
+				{	gravity: 0.4,  
+				view:"form", 
+				id: "myform",
+				elements: [
+					
+						{ template:"Edit films", type:"section"},
+						{ view:"text", label:"Title", name:"title", value:""},
+						{ view:"text", label:"Year", name:"year", value:"" },
+						{ view:"text", label:"Rating", name:"rating", value:"" },
+						{ view:"text", label:"Votes", name:"votes", value:"" },
+						{ margin:5, cols:
+										[
+											{ view:"button", value:"Add new" , type:"form", click:function()
+													{
+												  		if($$("myform").validate())
+												  		{
+													  		var item = $$("myform").getValues();
+													  		
+													  		$$("mydata").add(item);
+													  		webix.message({text:"successful validation", type:"info"});
+													  	}
+													}
+											},
+											{ 
+												view:"button", 
+												value:"Clear", 
+												click:function()
+														{
+															$$("myform").clearValidation();
+															$$("myform").clear();
+														}
+											}
+										]
+						},
+						{ }
+				],
+				rules:{
+						title:webix.rules.isNotEmpty,
+						year:function(value){
+												return (1970<value &&  value< new Date().getFullYear());
+						},
+						rating:(webix.rules.isNotEmpty && function(value) {return value!=0;}),
+						votes: function(value){
+								return value<1000;
+							} 
+				
+				},
+				on:{
+				   onValidationError:function(key, data){
+					webix.message({text:key+" data is incorrect", type:"error"});
+				   },
+				}
+				}
+			]		 
 		},
 		
-			{
-			view:"template", css:"footer", template:"The software is provided by <a href='https://webix.com/'>https://webix.com/</a>. All rights reserved ©."
+		{
+		view:"template", css:"footer", autoheight:"true", template:"The software is provided by <a href='https://webix.com/'>https://webix.com/</a>. All rights reserved ©."
 		}
 			
 	]
